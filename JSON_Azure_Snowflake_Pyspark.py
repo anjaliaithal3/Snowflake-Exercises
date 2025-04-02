@@ -69,7 +69,7 @@ def create_snowflake_table(df):
     #Creates a Snowflake table dynamically based on JSON metadata
     meta_row = df.select("meta").first()
     if meta_row is None or meta_row["meta"] is None:
-        raise ValueError("❌ Meta data not found in JSON file")
+        raise ValueError("Meta data not found in JSON file")
 
     meta_json = meta_row["meta"].asDict(recursive=True)
     columns_metadata = meta_json.get("view", {}).get("columns", [])
@@ -82,7 +82,7 @@ def create_snowflake_table(df):
 
     columns = []
     for col in columns_metadata:
-        col_name = f'"{col["name"]}"'  # Handle spaces by quoting column names
+        col_name = f'"{col["name"]}"'  
         col_type = type_mapping.get(col.get("dataTypeName", "text"), "STRING")
         columns.append(f"{col_name} {col_type}")
 
